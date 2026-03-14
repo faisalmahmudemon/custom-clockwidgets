@@ -1,7 +1,6 @@
 <!doctype html>
 <html lang="en">
   <head>
-    
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Greetings</title>
@@ -67,7 +66,6 @@
     </style>
   </head>
   <body>
-    <div class="container>">
       <div class="widget">
         <div class="greet" id="greet"></div>
 
@@ -80,56 +78,35 @@
         </div>
         <div class="date" id="date"></div>
       </div>
-    </div>
 
     <script>
       function displayGreetings(today) {
-        hrs = today.getHours();
-        name = "";
-        if (hrs < 12) greet = "Good Morning  " + name;
-        else if (hrs >= 12 && hrs <= 16) greet = "Good Afternoon " + name;
-        else if (hrs >= 16 && hrs <= 20) greet = "Good Evening  " + name;
-        else greet = "Good Night  " + name;
+        const hrs = today.getHours();
+        let greet = "";
+        if (hrs < 12) greet = "Good Morning";
+        else if (hrs >= 12 && hrs <= 16) greet = "Good Afternoon";
+        else if (hrs >= 16 && hrs <= 20) greet = "Good Evening";
+        else greet = "Good Night";
+
         document.getElementById("greet").innerHTML = greet;
       }
 
       function displayDate(today) {
-        const days = [
-          "Sunday",
-          "Monday",
-          "Tuesday",
-          "Wednesday",
-          "Thursday",
-          "Friday",
-          "Saturday",
-        ];
-        const monthNames = [
-          "January",
-          "February",
-          "March",
-          "April",
-          "May",
-          "June",
-          "July",
-          "August",
-          "September",
-          "October",
-          "November",
-          "December",
-        ];
+        const days = ["Sunday","Monday","Tuesday","Wednesday","Thursday","Friday","Saturday"];
+        const monthNames = ["January","February","March","April","May","June","July","August","September","October","November","December"];
 
-        var dayName = days[today.getDay()];
-        var monthName = monthNames[today.getMonth()];
-        var date = today.getDate();
-        var year = today.getFullYear();
-        document.getElementById("date").innerHTML =
-          dayName + ", " + monthName + " " + date + " " + year;
+        const dayName = days[today.getDay()];
+        const monthName = monthNames[today.getMonth()];
+        const date = today.getDate();
+        const year = today.getFullYear();
+
+        document.getElementById("date").innerHTML = `${dayName}, ${monthName} ${date} ${year}`;
       }
 
       function displayClock(today) {
-        var hour = padZeros(twelveHour(today.getHours()));
-        var minutes = padZeros(today.getMinutes());
-        var seconds = padZeros(today.getSeconds());
+        let hour = padZeros(twelveHour(today.getHours()));
+        let minutes = padZeros(today.getMinutes());
+        let seconds = padZeros(today.getSeconds());
 
         if (today.getHours() >= 12) {
           seconds += " pm";
@@ -143,367 +120,17 @@
       }
 
       function twelveHour(hour) {
-        if (hour > 12) {
-          return (hour -= 12);
-        } else if (hour === 0) {
-          return (hour = 12);
-        } else {
-          return hour;
-        }
+        if (hour > 12) return hour - 12;
+        else if (hour === 0) return 12;
+        else return hour;
       }
+
       function padZeros(num) {
-        if (num < 10) {
-          num = "0" + num;
-        }
-        return num;
+        return num < 10 ? "0" + num : num;
       }
 
       function displayWidget() {
-        var today = new Date();
-        displayGreetings(today);
-        displayDate(today);
-        displayClock(today);
-        setTimeout(displayWidget, 500);
-      }
-
-      displayWidget();
-    </script>
-  </body>
-</html>
-<!doctype html>
-<html lang="en">
-  <head>
-    
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Greetings</title>
-
-    <style>
-      body {
-        font-variant-caps: all-petite-caps;
-        background: #ffffff;
-      }
-
-      /* Widget */
-      .widget {
-        padding: 5px 5px;
-        color: #1a1a1a;
-
-        display: grid;
-        place-items: center;
-        grid-auto-flow: row;
-
-        max-width: 95%;
-        margin: auto;
-
-        background: #ffffff;
-
-        border: 2px solid #e5e7eb;
-        border-radius: 6px;
-
-        box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
-      }
-
-      /* Greeting */
-      .greet {
-        font-size: 4em;
-        color: #111216; /* modern blue accent */
-      }
-
-      /* Date */
-      .date {
-        font-family: monospace;
-        font-size: 3em;
-        color: #4b5563; /* soft gray */
-      }
-
-      /* Clock */
-      .clock {
-        font-family: monospace;
-        font-size: 4em;
-        color: #111827; /* strong dark */
-      }
-
-      /* Time numbers */
-      .time {
-        display: inline-block;
-        min-width: 20px;
-      }
-
-      /* Colon */
-      .colon {
-        font-size: 1em;
-        display: inline-block;
-        color: #9ca3af;
-      }
-    </style>
-  </head>
-  <body>
-    <div class="container>">
-      <div class="widget">
-        <div class="greet" id="greet"></div>
-
-        <div class="clock">
-          <div class="time" id="hour"></div>
-          <div class="colon">:</div>
-          <div class="time" id="min"></div>
-          <div class="colon">:</div>
-          <div class="time" id="sec"></div>
-        </div>
-        <div class="date" id="date"></div>
-      </div>
-    </div>
-
-    <script>
-      function displayGreetings(today) {
-        hrs = today.getHours();
-        name = "";
-        if (hrs < 12) greet = "Good Morning  " + name;
-        else if (hrs >= 12 && hrs <= 16) greet = "Good Afternoon " + name;
-        else if (hrs >= 16 && hrs <= 20) greet = "Good Evening  " + name;
-        else greet = "Good Night  " + name;
-        document.getElementById("greet").innerHTML = greet;
-      }
-
-      function displayDate(today) {
-        const days = [
-          "Sunday",
-          "Monday",
-          "Tuesday",
-          "Wednesday",
-          "Thursday",
-          "Friday",
-          "Saturday",
-        ];
-        const monthNames = [
-          "January",
-          "February",
-          "March",
-          "April",
-          "May",
-          "June",
-          "July",
-          "August",
-          "September",
-          "October",
-          "November",
-          "December",
-        ];
-
-        var dayName = days[today.getDay()];
-        var monthName = monthNames[today.getMonth()];
-        var date = today.getDate();
-        var year = today.getFullYear();
-        document.getElementById("date").innerHTML =
-          dayName + ", " + monthName + " " + date + " " + year;
-      }
-
-      function displayClock(today) {
-        var hour = padZeros(twelveHour(today.getHours()));
-        var minutes = padZeros(today.getMinutes());
-        var seconds = padZeros(today.getSeconds());
-
-        if (today.getHours() >= 12) {
-          seconds += " pm";
-        } else {
-          seconds += " am";
-        }
-
-        document.getElementById("hour").innerHTML = hour;
-        document.getElementById("min").innerHTML = minutes;
-        document.getElementById("sec").innerHTML = seconds;
-      }
-
-      function twelveHour(hour) {
-        if (hour > 12) {
-          return (hour -= 12);
-        } else if (hour === 0) {
-          return (hour = 12);
-        } else {
-          return hour;
-        }
-      }
-      function padZeros(num) {
-        if (num < 10) {
-          num = "0" + num;
-        }
-        return num;
-      }
-
-      function displayWidget() {
-        var today = new Date();
-        displayGreetings(today);
-        displayDate(today);
-        displayClock(today);
-        setTimeout(displayWidget, 500);
-      }
-
-      displayWidget();
-    </script>
-  </body>
-</html>
-<!doctype html>
-<html lang="en">
-  <head>
-    
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Greetings</title>
-
-    <style>
-      body {
-        font-variant-caps: all-petite-caps;
-        background: #ffffff;
-      }
-
-      /* Widget */
-      .widget {
-        padding: 5px 5px;
-        color: #1a1a1a;
-
-        display: grid;
-        place-items: center;
-        grid-auto-flow: row;
-
-        max-width: 95%;
-        margin: auto;
-
-        background: #ffffff;
-
-        border: 2px solid #e5e7eb;
-        border-radius: 6px;
-
-        box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
-      }
-
-      /* Greeting */
-      .greet {
-        font-size: 4em;
-        color: #111216; /* modern blue accent */
-      }
-
-      /* Date */
-      .date {
-        font-family: monospace;
-        font-size: 3em;
-        color: #4b5563; /* soft gray */
-      }
-
-      /* Clock */
-      .clock {
-        font-family: monospace;
-        font-size: 4em;
-        color: #111827; /* strong dark */
-      }
-
-      /* Time numbers */
-      .time {
-        display: inline-block;
-        min-width: 20px;
-      }
-
-      /* Colon */
-      .colon {
-        font-size: 1em;
-        display: inline-block;
-        color: #9ca3af;
-      }
-    </style>
-  </head>
-  <body>
-    <div class="container>">
-      <div class="widget">
-        <div class="greet" id="greet"></div>
-
-        <div class="clock">
-          <div class="time" id="hour"></div>
-          <div class="colon">:</div>
-          <div class="time" id="min"></div>
-          <div class="colon">:</div>
-          <div class="time" id="sec"></div>
-        </div>
-        <div class="date" id="date"></div>
-      </div>
-    </div>
-
-    <script>
-      function displayGreetings(today) {
-        hrs = today.getHours();
-        name = "";
-        if (hrs < 12) greet = "Good Morning  " + name;
-        else if (hrs >= 12 && hrs <= 16) greet = "Good Afternoon " + name;
-        else if (hrs >= 16 && hrs <= 20) greet = "Good Evening  " + name;
-        else greet = "Good Night  " + name;
-        document.getElementById("greet").innerHTML = greet;
-      }
-
-      function displayDate(today) {
-        const days = [
-          "Sunday",
-          "Monday",
-          "Tuesday",
-          "Wednesday",
-          "Thursday",
-          "Friday",
-          "Saturday",
-        ];
-        const monthNames = [
-          "January",
-          "February",
-          "March",
-          "April",
-          "May",
-          "June",
-          "July",
-          "August",
-          "September",
-          "October",
-          "November",
-          "December",
-        ];
-
-        var dayName = days[today.getDay()];
-        var monthName = monthNames[today.getMonth()];
-        var date = today.getDate();
-        var year = today.getFullYear();
-        document.getElementById("date").innerHTML =
-          dayName + ", " + monthName + " " + date + " " + year;
-      }
-
-      function displayClock(today) {
-        var hour = padZeros(twelveHour(today.getHours()));
-        var minutes = padZeros(today.getMinutes());
-        var seconds = padZeros(today.getSeconds());
-
-        if (today.getHours() >= 12) {
-          seconds += " pm";
-        } else {
-          seconds += " am";
-        }
-
-        document.getElementById("hour").innerHTML = hour;
-        document.getElementById("min").innerHTML = minutes;
-        document.getElementById("sec").innerHTML = seconds;
-      }
-
-      function twelveHour(hour) {
-        if (hour > 12) {
-          return (hour -= 12);
-        } else if (hour === 0) {
-          return (hour = 12);
-        } else {
-          return hour;
-        }
-      }
-      function padZeros(num) {
-        if (num < 10) {
-          num = "0" + num;
-        }
-        return num;
-      }
-
-      function displayWidget() {
-        var today = new Date();
+        const today = new Date();
         displayGreetings(today);
         displayDate(today);
         displayClock(today);
