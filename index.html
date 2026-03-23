@@ -1,207 +1,221 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Glass Clock Widget</title>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Glass Clock Widget</title>
 
-<style>
+    <style>
+      * {
+        box-sizing: border-box;
+      }
 
-*{
-    box-sizing:border-box;
-}
+      body {
+        margin: auto;
+        font-variant-caps: all-petite-caps;
+        font-family:
+          system-ui,
+          -apple-system,
+          Segoe UI,
+          Roboto,
+          sans-serif;
+        -webkit-font-smoothing: antialiased;
+      }
 
-body{
-    margin:auto;
-    font-variant-caps: all-petite-caps;
-    font-family: system-ui, -apple-system, Segoe UI, Roboto, sans-serif;
-    -webkit-font-smoothing:antialiased;
-}
+      /* glass widget */
 
-/* glass widget */
+      .widget {
+        width: 95%;
+        margin: auto;
+        margin-top: 5px;
+        padding: 20px 20px 20px 20px;
 
-.widget{
-    width:95%;
-  margin: auto;
-  margin-top:5px;
-    padding:20px 20px 20px 20px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        gap: 8px;
 
-    display:flex;
-    flex-direction:column;
-    align-items:center;
-    justify-content:center;
-    gap:8px;
+        background: rgba(255, 255, 255, 0.15);
+        backdrop-filter: blur(12px);
+        -webkit-backdrop-filter: blur(12px);
 
-    background: rgba(255,255,255,0.15);
-    backdrop-filter: blur(12px);
-    -webkit-backdrop-filter: blur(12px);
+        border-bottom: 1px solid rgba(255, 255, 255, 0.3);
 
-    border-bottom:1px solid rgba(255,255,255,0.3);
+        box-shadow:
+          0 4px 20px rgba(0, 0, 0, 0.2),
+          inset 0 1px 0 rgba(255, 255, 255, 0.25);
 
-    box-shadow:
-        0 4px 20px rgba(0,0,0,0.2),
-        inset 0 1px 0 rgba(255,255,255,0.25);
+        color: black;
 
-    color:black;
+        transition:
+          transform 0.25s ease,
+          box-shadow 0.25s ease;
+      }
 
-    transition: transform .25s ease, box-shadow .25s ease;
-}
+      .widget:hover {
+        transform: translateY(-2px);
+        box-shadow:
+          0 8px 30px rgba(0, 0, 0, 0.25),
+          inset 0 1px 0 rgba(255, 255, 255, 0.25);
+      }
 
-.widget:hover{
-    transform:translateY(-2px);
-    box-shadow:
-        0 8px 30px rgba(0,0,0,0.25),
-        inset 0 1px 0 rgba(255,255,255,0.25);
-}
+      /* greeting */
 
-/* greeting */
+      .greet {
+        font-size: clamp(2rem, 6vw, 4rem);
+        font-weight: 600;
+      }
 
-.greet{
-    font-size:clamp(1.8rem,6vw,4rem);
-    font-weight:600;
-}
+      /* date */
 
-/* date */
+      .date {
+        font-family: monospace;
+        font-size: clamp(1.5rem, 4.5vw, 3rem);
+        font-weight: 400;
+        opacity: 0.85;
+      }
 
-.date{
-    font-family:monospace;
-    font-size:clamp(1.2rem,4vw,2.5rem);
-    font-weight:400;
-    opacity:.85;
-}
+      /* clock */
 
-/* clock */
+      .clock {
+        font-family: monospace;
+        font-size: clamp(1.5rem, 4.5vw, 3rem);
+        font-weight: 400;
+        display: flex;
+        align-items: center;
+        gap: 2px;
+      }
 
-.clock{
-    font-family:monospace;
-    font-size:clamp(1.2rem,4vw,2.5rem);
-    font-weight:400;
-    display:flex;
-    align-items:center;
-    gap:2px;
-}
+      /* numbers */
 
-/* numbers */
+      .time {
+        display: inline-block;
+        min-width: 26px;
+        text-align: center;
+        font-weight: 600;
+      }
 
-.time{
-    display:inline-block;
-    min-width:26px;
-    text-align:center;
-    font-weight:600;
-}
+      /* blinking colon */
 
-/* blinking colon */
+      .colon {
+        display: inline-block;
+        animation: blink 1s steps(1) infinite;
+      }
 
-.colon{
-    display:inline-block;
-    animation: blink 1s steps(1) infinite;
-}
+      @keyframes blink {
+        50% {
+          opacity: 0;
+        }
+      }
+    </style>
+  </head>
 
-@keyframes blink{
-    50%{opacity:0}
-}
+  <body>
+    <div class="widget">
+      <div class="greet" id="greet"></div>
 
-</style>
-</head>
+      <div class="date" id="date"></div>
 
-<body>
+      <div class="clock">
+        <span class="time" id="hour"></span>
+        <span class="colon">:</span>
+        <span class="time" id="min"></span>
+        <span class="colon">:</span>
+        <span class="time" id="sec"></span>
+      </div>
+    </div>
 
-<div class="widget">
+    <script>
+      function displayGreetings(today) {
+        let hrs = today.getHours();
+        let name = "";
+        let greet;
 
-<div class="greet" id="greet"></div>
+        if (hrs < 12) greet = "Good Morning " + name;
+        else if (hrs <= 17) greet = "Good Afternoon " + name;
+        else greet = "Good Evening " + name;
 
-<div class="date" id="date"></div>
+        document.getElementById("greet").innerHTML = greet;
+      }
 
-<div class="clock">
-<span class="time" id="hour"></span>
-<span class="colon">:</span>
-<span class="time" id="min"></span>
-<span class="colon">:</span>
-<span class="time" id="sec"></span>
-</div>
+      function displayDate(today) {
+        const days = [
+          "Sunday",
+          "Monday",
+          "Tuesday",
+          "Wednesday",
+          "Thursday",
+          "Friday",
+          "Saturday",
+        ];
 
-</div>
+        const months = [
+          "January",
+          "February",
+          "March",
+          "April",
+          "May",
+          "June",
+          "July",
+          "August",
+          "September",
+          "October",
+          "November",
+          "December",
+        ];
 
-<script>
+        let dayName = days[today.getDay()];
+        let monthName = months[today.getMonth()];
+        let date = today.getDate();
+        let year = today.getFullYear();
 
-function displayGreetings(today){
-    let hrs = today.getHours();
-    let name = "";
-    let greet;
+        document.getElementById("date").innerHTML =
+          dayName + ", " + monthName + " " + date + " " + year;
+      }
 
-    if (hrs < 12)
-        greet = "Good Morning " + name;
-    else if (hrs <= 17)
-        greet = "Good Afternoon " + name;
-    else
-        greet = "Good Evening " + name;
+      function displayClock(today) {
+        let hour = padZeros(twelveHour(today.getHours()));
+        let minutes = padZeros(today.getMinutes());
+        let seconds = padZeros(today.getSeconds());
 
-    document.getElementById("greet").innerHTML = greet;
-}
+        if (today.getHours() >= 12) {
+          seconds += " pm";
+        } else {
+          seconds += " am";
+        }
 
-function displayDate(today){
+        document.getElementById("hour").innerHTML = hour;
+        document.getElementById("min").innerHTML = minutes;
+        document.getElementById("sec").innerHTML = seconds;
+      }
 
-    const days = ["Sunday","Monday","Tuesday","Wednesday","Thursday","Friday","Saturday"];
+      function twelveHour(hour) {
+        if (hour > 12) {
+          return hour - 12;
+        } else if (hour === 0) {
+          return 12;
+        } else {
+          return hour;
+        }
+      }
 
-    const months = [
-        "January","February","March","April","May","June",
-        "July","August","September","October","November","December"
-    ];
+      function padZeros(num) {
+        if (num < 10) {
+          num = "0" + num;
+        }
+        return num;
+      }
 
-    let dayName = days[today.getDay()];
-    let monthName = months[today.getMonth()];
-    let date = today.getDate();
-    let year = today.getFullYear();
+      function displayWidget() {
+        let today = new Date();
+        displayGreetings(today);
+        displayDate(today);
+        displayClock(today);
+        setTimeout(displayWidget, 500);
+      }
 
-    document.getElementById("date").innerHTML =
-    dayName + ", " + monthName + " " + date + " " + year;
-}
-
-function displayClock(today){
-
-    let hour = padZeros(twelveHour(today.getHours()));
-    let minutes = padZeros(today.getMinutes());
-    let seconds = padZeros(today.getSeconds());
-
-    if(today.getHours() >= 12){
-        seconds += " pm";
-    } else {
-        seconds += " am";
-    }
-
-    document.getElementById("hour").innerHTML = hour;
-    document.getElementById("min").innerHTML = minutes;
-    document.getElementById("sec").innerHTML = seconds;
-}
-
-function twelveHour(hour){
-    if(hour > 12){
-        return hour - 12;
-    } else if(hour === 0){
-        return 12;
-    } else {
-        return hour;
-    }
-}
-
-function padZeros(num){
-    if(num < 10){
-        num = "0" + num;
-    }
-    return num;
-}
-
-function displayWidget(){
-    let today = new Date();
-    displayGreetings(today);
-    displayDate(today);
-    displayClock(today);
-    setTimeout(displayWidget,500);
-}
-
-displayWidget();
-
-</script>
-
-</body>
+      displayWidget();
+    </script>
+  </body>
 </html>
